@@ -6,17 +6,32 @@ Dataprobe is a high-performance desktop data cleaning & batch transformation sui
 
 ## 📥 Download & Installation
 
-Download the standalone Windows installer directly from the official release page:
+Download standalone binaries directly from the official release page:
 
-👉 **[Download Dataprobe v0.1.0 Setup (.exe)](https://github.com/DtronicE/dataprobe/releases/download/v0.1.0/Dataprobe_0.1.0_x64-setup.exe)**  
-📦 **[Download MSI Package (.msi)](https://github.com/DtronicE/dataprobe/releases/download/v0.1.0/Dataprobe_0.1.0_x64_en-US.msi)**
+- 💻 **[Download Windows GUI Setup (.exe)](https://github.com/DtronicE/dataprobe/releases/download/v0.1.0/Dataprobe_0.1.0_x64-setup.exe)**
+- 📦 **[Download Windows MSI Package (.msi)](https://github.com/DtronicE/dataprobe/releases/download/v0.1.0/Dataprobe_0.1.0_x64_en-US.msi)**
+- ⚡ **[Download Standalone CLI Executable (.exe)](https://github.com/DtronicE/dataprobe/releases/download/v0.1.0/dataprobe-cli-x64.exe)**
 
 ---
 
-## ✨ Key Features
+## ⚙️ CLI Quick Start & Command Guide
 
-- **Blazing Fast Scanning & Profiling**: Powered by Rust & Polars v0.46 engine.
-- **Side-by-Side Visual Preview**: Inspect raw vs. cleaned dataset states before committing changes.
-- **Custom Transformation Pipelines**: Remove duplicates, trim string whitespace, drop null rows/cols, and fill missing values dynamically.
-- **Batch Directory Cleaning**: Transform multiple datasets simultaneously into CSV, Parquet, or JSON formats.
-- **Zero Runtime Dependencies**: Packaged into a self-contained desktop binary.
+Dataprobe can be run directly from terminal/PowerShell for automated batch scripts and headless workflows.
+
+### Basic Command Syntax
+
+```bash
+# Basic Usage
+dataprobe-cli-x64.exe --input <PATH> --output <PATH> [OPTIONS]
+
+# Quick Dataset Inspection
+dataprobe-cli-x64.exe inspect --input ./data/raw_dataset.csv
+
+# Batch Transformation Example
+dataprobe-cli-x64.exe transform \
+  --input ./data/sales_raw.csv \
+  --output ./data/sales_cleaned.parquet \
+  --format parquet \
+  --trim-strings \
+  --drop-nulls \
+  --dedupe
