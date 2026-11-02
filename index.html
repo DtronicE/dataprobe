@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dataprobe Engine</title>
+  </head>
+
+  <body>
+    <main class="container">
+      <header>
+        <h1>DATAPROBE</h1>
+        <p class="subtitle">High-Performance Data Cleaning & Batch Transformation Suite</p>
+      </header>
+
+      <form id="scan-form" class="scan-bar">
+        <input id="scan-input" placeholder="Enter path or click Browse..." />
+        <button type="button" id="browse-btn">Browse</button>
+        <button type="submit">Run Scan</button>
+      </form>
+
+      <div id="status-message" class="status-box">Ready to scan</div>
+
+      <div class="stats-grid">
+        <div class="card">
+          <span class="card-label">Files Scanned</span>
+          <span id="stat-files" class="card-value">-</span>
+        </div>
+        <div class="card">
+          <span class="card-label">Total Size</span>
+          <span id="stat-size" class="card-value">-</span>
+        </div>
+        <div class="card">
+          <span class="card-label">Execution Time</span>
+          <span id="stat-time" class="card-value">-</span>
+        </div>
+      </div>
+
+      <section class="rules-container">
+        <h3>Custom Cleaning Rules</h3>
+        <div class="rules-grid">
+          <label><input type="checkbox" id="opt-dedupe" checked /> Remove Duplicates</label>
+          <label><input type="checkbox" id="opt-drop-null-rows" checked /> Drop Null Rows</label>
+          <label><input type="checkbox" id="opt-drop-null-cols" /> Drop Fully Null Columns</label>
+          <label><input type="checkbox" id="opt-trim" checked /> Trim Whitespace</label>
+          <label><input type="checkbox" id="opt-fill-nulls" /> Fill Nulls</label>
+          <div class="fill-input-group">
+            <input id="opt-fill-val" value="0" placeholder="Fill value (e.g. 0 or N/A)" />
+          </div>
+        </div>
+      </section>
+
+      <section id="metrics-section" class="ext-container hidden" style="margin-top: 16px;">
+        <h3>Cleaning Profile Metrics</h3>
+        <div class="stats-grid">
+          <div class="card">
+            <span class="card-label">Saved Size / Memory</span>
+            <span id="metric-mem" class="card-value">-</span>
+          </div>
+          <div class="card">
+            <span class="card-label">Completeness</span>
+            <span id="metric-complete" class="card-value">-</span>
+          </div>
+          <div class="card">
+            <span class="card-label">Rows Preserved</span>
+            <span id="metric-rows" class="card-value">-</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="ext-section" class="ext-container hidden" style="margin-top: 16px;">
+        <div class="ext-header">
+          <h3>Top File Types</h3>
+          <button type="button" id="export-btn" class="export-btn">Export Scan CSV</button>
+        </div>
+        <table class="ext-table">
+          <thead>
+            <tr>
+              <th>Extension</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody id="ext-table-body"></tbody>
+        </table>
+      </section>
+
+      <section id="dataset-section" class="ext-container hidden" style="margin-top: 16px;">
+        <div class="ext-header">
+          <h3>Detected Datasets</h3>
+          <div class="batch-controls">
+            <select id="batch-fmt-select" class="fmt-select">
+              <option value="csv">Export as CSV</option>
+              <option value="parquet">Export as Parquet</option>
+              <option value="json">Export as JSON</option>
+            </select>
+            <button type="button" id="batch-clean-btn" class="batch-btn">Clean All Datasets</button>
+          </div>
+        </div>
+        <table class="ext-table">
+          <thead>
+            <tr>
+              <th>File Name</th>
+              <th>Format</th>
+              <th>Rows</th>
+              <th>Cols</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="dataset-table-body"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <!-- Modal Preview -->
+    <div id="preview-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Before vs. After Cleaning Preview</h2>
+          <button id="modal-close-btn" class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="preview-split">
+            <div class="preview-box">
+              <h4>Raw Data (<span id="prev-orig-dim"></span>)</h4>
+              <div class="table-scroll">
+                <table class="ext-table">
+                  <thead id="prev-orig-head"></thead>
+                  <tbody id="prev-orig-body"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="preview-box">
+              <h4>Cleaned Output (<span id="prev-clean-dim"></span>)</h4>
+              <div class="table-scroll">
+                <table class="ext-table">
+                  <thead id="prev-clean-head"></thead>
+                  <tbody id="prev-clean-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="confirm-save-btn" class="export-btn">Confirm & Save File</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
